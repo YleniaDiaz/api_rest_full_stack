@@ -1,5 +1,17 @@
 <div class="container p-4">
     <div class="row">
+
+        <div class="col-md-3">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    </br>
+                    <p class="m-2">Añadir empleado</p>
+                    </br>
+                    <a href="/add" class="btn btn-primary">Añadir</a>
+                </div>
+            </div>
+        </div>
+
         {{#each LINKS}}
             <div class="col-md-3">
                 <div class="card text-center">
@@ -7,8 +19,8 @@
                         <p class="m-2"> {{id}}</p>
                         <p class="m-2"> {{name}}</p>
                         <p class="m-2"> {{salary}}</p>
-                        <a href="/links/delete/{{id}}" class="btn btn-danger" >Borrar</a>
-                        <a href="/links/edit/{{id}}" class="btn btn-secondary">Editar</a>
+                        <a href="/delete/{{id}}" class="btn btn-danger" >Borrar</a>
+                        <a href="/edit/{{id}}" class="btn btn-secondary">Editar</a>
                     </div>
                 </div>
             </div>
@@ -16,7 +28,7 @@
             <div class="col-md-4 mx-auto">
                 <div class="card card-body text-center">
                     <p>No hay registros en La Tabla</p>
-                    <a href="/links/add">Crear un empleado</a>
+                    <!-- <a href="/add">Crear un empleado</a> -->
                 </div>
             </div>
         {{/each}}

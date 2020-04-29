@@ -6,6 +6,9 @@ APP.set('PORT', process.env.PORT || 8000);
 
 APP.set('PATH_LINKS', `${__dirname}/src/views/links`);
 
+//para aceptar los datos que vienen de un formulario
+APP.use(EXPRESS.urlencoded({extended:true}));
+
 const HANDLEBARS=require('express-handlebars');
 
 //APP.set('views', './src/views');
@@ -19,8 +22,5 @@ APP.set('view engine','.hbs');
 APP.use(EXPRESS.json());
 
 APP.use(require('./src/routes/routes'));
-
-//para aceptar los datos que vienen de un formulario
-APP.use(EXPRESS.urlencoded({extended:false}));
 
 APP.listen(APP.get('PORT'), ()=>console.log(`SERVER LISTENING IN PORT ${APP.get('PORT')}`));
