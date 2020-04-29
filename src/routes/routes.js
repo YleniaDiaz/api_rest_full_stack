@@ -39,10 +39,11 @@ ROUTER.get('/edit/:id', async(req, res)=>{
     res.render(`${req.app.get('PATH_LINKS')}/edit`, {LINKS});
 });
 
-ROUTER.put('/add', async(req, res)=>{
+ROUTER.post('/edit/:id', async(req, res)=>{
+    const {id} = req.params;
     const {name, salary}=req.body;
-    await POOL.query(`insert into employees (name, salary) values ('${name}', ${salary})`);
-    res.redirect('list');
+    await POOL.query(`update employees set name='${name}', salary=${salary} where id=${id}`);
+    res.redirect('/list');
 });
 
 /**
