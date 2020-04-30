@@ -3,13 +3,12 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    {{#each LINKS}}
-                    <form action="/edit/{{id}}" method="POST">
+                    <form action="/edit/{{links.id}}" method="POST">
                        <div class="form-group">
-                           <input type="text"  value="{{name}}" class="form-control" name="name" placeholder="nombre" autofocus>
+                           <input type="text"  value="{{links.name}}" class="form-control" name="name" placeholder="Nombre" autofocus>
                         </div>
                         <div class="form-group">
-                            <input type="number" value="{{salary}}" class="form-control" name="salary" placeholder="salario">
+                            <input type="number" value="{{links.salary}}" class="form-control" name="salary" placeholder="Salario">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block">
@@ -17,7 +16,6 @@
                             </button>
                         </div>
                     </form>
-                    {{/each}}
                 </div>
             </div>
         </div>

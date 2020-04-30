@@ -35,14 +35,14 @@ ROUTER.post('/add', async(req, res)=>{
 ROUTER.get('/edit/:id', async(req, res)=>{
     const {id} = req.params;
     const LINKS=await POOL.query(`SELECT * FROM employees where id=${id}`);
-    //LINKS[0]
-    res.render(`${req.app.get('PATH_LINKS')}/edit`, {LINKS});
+    res.render(`${req.app.get('PATH_LINKS')}/edit`, {links:LINKS[0]});
 });
 
 ROUTER.post('/edit/:id', async(req, res)=>{
     const {id} = req.params;
     const {name, salary}=req.body;
-    await POOL.query(`update employees set name='${name}', salary=${salary} where id=${id}`);
+    const QUERY = `update employees set name='${name}', salary=${salary} where id=${id}`;
+    await POOL.query(QUERY);
     res.redirect('/list');
 });
 
