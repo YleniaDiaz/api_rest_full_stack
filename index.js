@@ -16,6 +16,7 @@ const HANDLEBARS=require('express-handlebars');
 APP.engine('.hbs', HANDLEBARS({
     defaultLayout: 'main',
     layoutsDir: ('./src/views/main'),
+    partialsDir:('./src/views/main/partials'),
     extname: '.hbs'
 }));
 APP.set('view engine','.hbs');
