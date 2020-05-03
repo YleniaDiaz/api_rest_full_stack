@@ -5,7 +5,7 @@ const ROUTER = EXPRESS.Router();
 const POOL = require('../../database/db_pool');
 
 ROUTER.get('/', (req, res)=>{
-    res.send('Hola Don Pepito');
+    res.render(`${req.app.get('PATH_LINKS')}/home`);
 });
 
 /**
