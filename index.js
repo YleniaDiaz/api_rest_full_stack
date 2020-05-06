@@ -1,6 +1,9 @@
 const EXPRESS = require('express');
-
+const SESSION = require('express-session');
 const APP = EXPRESS();
+const MYSQL_STORE = require('express-mysql-session');
+
+const {DATABASE} = require('./database/db');
 
 APP.set('PORT', process.env.PORT || 8000);
 
@@ -20,6 +23,13 @@ APP.engine('.hbs', HANDLEBARS({
     extname: '.hbs'
 }));
 APP.set('view engine','.hbs');
+
+APP.use(SESSION({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true,
+    store:new MYSQL_STORE(DATABASE)
+}));
 
 APP.use(EXPRESS.json());
 

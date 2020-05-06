@@ -1,14 +1,9 @@
+const {DATABASE}=require('./db');
+
 const MYSQL = require('mysql');
 
 //convert callback code to promises 
 const {promisify}=require('util');
-
-const DATABASE = {
-    host: 'localhost',
-    user: 'root',
-    password: 'ylenia',
-    database: 'company',
-};
 
 const POOL = MYSQL.createPool(DATABASE);
 

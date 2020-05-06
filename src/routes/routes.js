@@ -1,8 +1,14 @@
 const EXPRESS = require('express');
-
 const ROUTER = EXPRESS.Router();
-
 const POOL = require('../../database/db_pool');
+
+const IS_LOGGED=(req, res, next)=>{
+    if(req.session.loggedin){
+        return next();
+    }else{
+        res.redirect('/signin');
+    }
+};
 
 ROUTER.get('/', (req, res)=>{
     res.render(`${req.app.get('PATH_LINKS')}/home`);
@@ -11,15 +17,16 @@ ROUTER.get('/', (req, res)=>{
 /**
  * LIST
  */
-ROUTER.get('/list', async(req, res)=>{
+ROUTER.get('/list', IS_LOGGED, async(req, res)=>{
     const LINKS=await POOL.query('SELECT * FROM employees');
+    LINKS.username=req.session.username;
     res.render(`${req.app.get('PATH_LINKS')}/list`,{LINKS});
 });
 
 /**
  * ADD
  */
-ROUTER.get('/add', async(req, res)=>{
+ROUTER.get('/add', IS_LOGGED, async(req, res)=>{
     res.render(`${req.app.get('PATH_LINKS')}/add`);
 });
 
@@ -32,7 +39,7 @@ ROUTER.post('/add', async(req, res)=>{
 /**
  * EDIT
  */
-ROUTER.get('/edit/:id', async(req, res)=>{
+ROUTER.get('/edit/:id', IS_LOGGED, async(req, res)=>{
     const {id} = req.params;
     const LINKS=await POOL.query(`SELECT * FROM employees where id=${id}`);
     res.render(`${req.app.get('PATH_LINKS')}/edit`, {links:LINKS[0]});
