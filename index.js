@@ -2,7 +2,7 @@ const EXPRESS = require('express');
 const SESSION = require('express-session');
 const APP = EXPRESS();
 const MYSQL_STORE = require('express-mysql-session');
-
+const PASSPORT = require('passport');
 const {DATABASE} = require('./database/db');
 
 APP.set('PORT', process.env.PORT || 8000);
@@ -24,6 +24,9 @@ APP.engine('.hbs', HANDLEBARS({
 }));
 APP.set('view engine','.hbs');
 
+APP.use(PASSPORT.initialize());
+APP.use(PASSPORT.session());
+
 APP.use(SESSION({
     secret: 'secret',
     resave: true,
@@ -34,6 +37,7 @@ APP.use(SESSION({
 APP.use(EXPRESS.json());
 
 APP.use(require('./src/routes/routes'));
-APP.use(require('./src/routes/authentications'));
+//APP.use(require('./src/routes/authentications'));
+APP.use(require('./src/routes/authenticationPassport'));
 
 APP.listen(APP.get('PORT'), ()=>console.log(`SERVER LISTENING IN PORT ${APP.get('PORT')}`));
