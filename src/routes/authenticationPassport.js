@@ -17,7 +17,7 @@ ROUTER.get('/signup', IS_LOGGED, (req, res)=>{
     res.render(`${req.app.get('PATH_AUTH')}/signup`);
 });
 
-ROUTER.post('/signup', PASSPORT.authenticate('signupLocal',{ 
+ROUTER.post('/signup', PASSPORT.authenticate('signupLocal', { 
     successRedirect:'/signin',
     failureRedirect: '/signup',
     failureFlash: true
@@ -30,7 +30,7 @@ ROUTER.get('/signin', IS_LOGGED, (req, res)=>{
     res.render(`${req.app.get('PATH_AUTH')}/signin`);
 });
 
-ROUTER.post('/signin', PASSPORT.authenticate('signinLocal',{
+ROUTER.post('/signin', PASSPORT.authenticate('signinLocal', {
     successRedirect:'/list',
     failureRedirect: '/signin',
     failureFlash: true
