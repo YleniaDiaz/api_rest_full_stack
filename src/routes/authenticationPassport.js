@@ -20,20 +20,34 @@ ROUTER.get('/signup', IS_LOGGED, (req, res)=>{
 ROUTER.post('/signup', PASSPORT.authenticate('signupLocal', { 
     successRedirect:'/signin',
     failureRedirect: '/signup',
-    failureFlash: true
+    failureFlash: 'false'
 }));
 
 /**
  * SIGN IN
  */
 ROUTER.get('/signin', IS_LOGGED, (req, res)=>{
-    res.render(`${req.app.get('PATH_AUTH')}/signin`);
+    console.log(req.flash('loginMessage')[0]);
+    res.render(`${req.app.get('PATH_AUTH')}/signin`, {message: req.flash('loginMessage')[0]});
 });
 
 ROUTER.post('/signin', PASSPORT.authenticate('signinLocal', {
     successRedirect:'/list',
     failureRedirect: '/signin',
     failureFlash: true
+}));
+
+/**
+ * GOOGLE AUTH
+ */
+ROUTER.get('/googleauth', IS_LOGGED, PASSPORT.authenticate('googleAuth', {
+    scope:['profile', 'email']
+}));
+
+ROUTER.get('/googleauth/callback', PASSPORT.authenticate('googleAuth', {
+    successRedirect: '/list',
+    failureRedirect: '/signin',
+    failureFlash: false
 }));
 
 /**

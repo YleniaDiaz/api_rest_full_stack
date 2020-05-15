@@ -28,7 +28,8 @@ const User = sequelize.define('users', {
     //attributes
     username:{
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }, 
     password: {
         type: Sequelize.STRING,
@@ -56,11 +57,11 @@ sequelize.sync({force: false})
 /**
  * SELECT * USER //LIST
  */
-/*User.findAll({attributes: [username]}).then(users => {
+/*User.findAll({attributes: ['username']}).then(users => {
     let usersString = JSON.stringify(users, null, 4);
     let usersObject = JSON.parse(usersString);
     console.log(usersObject);
-    //console.log(`ALL USERS: ${JSON.stringify(users, null, 4)}`);ç
+    //console.log(`ALL USERS: ${JSON.stringify(users, null, 4)}`);
 });*/
 
 /*User.findAll().then(users => {
@@ -68,7 +69,7 @@ sequelize.sync({force: false})
     let usersObject = JSON.parse(usersString);
     //SELECT *
     console.log(`ALL USERNAMES: ${usersObject.map((user)=>user.username)}`);
-    //WHERE
+    //WHEREs
     console.log(`USER KKK: ${usersObject.filter((user)=>user.username=='kkk')}`);
 });*/
 
@@ -108,7 +109,7 @@ sequelize.sync({force: false})
         fullname: 'Jon Calvo'
     },{
         where: {
-            id: 30
+            id: 32
         }
     }
 ).then(users=>console.log('UPDATE OK'));*/
@@ -118,7 +119,7 @@ sequelize.sync({force: false})
  */
 /*User.destroy({
         where:{
-            id: 30
+            id: 32
         }
     }
 ).then(()=>console.log('DELETE OK'))

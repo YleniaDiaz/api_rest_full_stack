@@ -4,6 +4,7 @@ const APP = EXPRESS();
 const MYSQL_STORE = require('express-mysql-session');
 const PASSPORT = require('passport');
 const {DATABASE} = require('./database/db');
+const FLASH=require('connect-flash');
 
 APP.set('PORT', process.env.PORT || 8000);
 
@@ -12,6 +13,8 @@ APP.set('PATH_AUTH', `${__dirname}/src/views/auth`);
 
 //para aceptar los datos que vienen de un formulario
 APP.use(EXPRESS.urlencoded({extended:true}));
+
+APP.use(FLASH());
 
 const HANDLEBARS=require('express-handlebars');
 
