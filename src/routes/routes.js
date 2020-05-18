@@ -18,6 +18,13 @@ ROUTER.get('/', (req, res)=>{
  * LIST
  */
 ROUTER.get('/list', IS_LOGGED, async(req, res)=>{
+    const FLASH_MESSAGE=req.flash();
+    if(FLASH_MESSAGE.success!=undefined){
+        //OBJECT MY_MESSAGE FROM PASSPORT
+        const MY_MESSAGE=JSON.parse((FLASH_MESSAGE.success));
+        res.locals.myAlert=MY_MESSAGE;
+    }
+
     const LINKS=await POOL.query('SELECT * FROM employees');
     LINKS.username=req.session.username;
     res.render(`${req.app.get('PATH_LINKS')}/list`, {LINKS});
@@ -44,7 +51,7 @@ ROUTER.get('/edit/:id', IS_LOGGED, async(req, res)=>{
     const {id} = req.params;
     const LINKS=await POOL.query(`SELECT * FROM employees where id=${id}`);
     LINKS[0].username=req.session.username;
-    res.render(`${req.app.get('PATH_LINKS')}/edit`, {links:LINKS[0]});
+    res.render(`${req.app.get('PATH_LINKS')}/edit`, {LINKS:LINKS[0]});
 });
 
 ROUTER.post('/edit/:id', IS_LOGGED, async(req, res)=>{

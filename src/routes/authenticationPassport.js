@@ -14,27 +14,76 @@ const IS_LOGGED=(req, res, next)=>{
  * SIGN UP
  */
 ROUTER.get('/signup', IS_LOGGED, (req, res)=>{
+    const FLASH_MESSAGE=req.flash();
+    console.log(FLASH_MESSAGE);
+    
+    if(FLASH_MESSAGE.error!=undefined){
+        let myMessage={};
+
+        if(FLASH_MESSAGE.error[0]=='Missing credentials'){
+            //EMPTY FIELD
+            myMessage={
+                type: 'alert-warning',
+                title: 'ERROR',
+                info: 'No puede haber ningún campo vacío'
+            };
+        }else{
+            //OBJECT MY_MESSAGE FROM PASSPORT
+            myMessage=JSON.parse((FLASH_MESSAGE.error));
+        }
+
+        res.locals.myAlert=myMessage;
+    }
+
     res.render(`${req.app.get('PATH_AUTH')}/signup`);
 });
 
 ROUTER.post('/signup', PASSPORT.authenticate('signupLocal', { 
     successRedirect:'/signin',
     failureRedirect: '/signup',
-    failureFlash: 'false'
+    failureFlash: true,
+    successFlash: true
 }));
 
 /**
  * SIGN IN
  */
 ROUTER.get('/signin', IS_LOGGED, (req, res)=>{
-    console.log(req.flash('loginMessage')[0]);
-    res.render(`${req.app.get('PATH_AUTH')}/signin`, {message: req.flash('loginMessage')[0]});
+    const FLASH_MESSAGE=req.flash();
+    console.log(FLASH_MESSAGE);
+
+    if(FLASH_MESSAGE.error!=undefined){
+        let myMessage={};
+
+        if(FLASH_MESSAGE.error[0]=='Missing credentials'){
+            //EMPTY FIELD
+            myMessage={
+                type: 'alert-warning',
+                title: 'ERROR',
+                info: 'No puede haber ningún campo vacío'
+            };
+        }else{
+            //OBJECT MY_MESSAGE FROM PASSPORT
+            myMessage=JSON.parse((FLASH_MESSAGE.error));
+        }
+
+        res.locals.myAlert=myMessage;
+    }
+    
+    if(FLASH_MESSAGE.success!=undefined){
+        //OBJECT MY_MESSAGE FROM PASSPORT
+        myMessage=JSON.parse((FLASH_MESSAGE.success));
+        res.locals.myAlert=myMessage;
+    }
+
+    res.render(`${req.app.get('PATH_AUTH')}/signin`);
 });
 
 ROUTER.post('/signin', PASSPORT.authenticate('signinLocal', {
     successRedirect:'/list',
     failureRedirect: '/signin',
-    failureFlash: true
+    failureFlash: true,
+    successFlash: true
 }));
 
 /**

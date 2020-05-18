@@ -5,9 +5,6 @@
                 <div class="card-header">
                     <h1>Sign In</h1>
                 </div>
-                {{#if message}}
-                    <p>{{message}}</p>
-                {{/if}}
                 <div class="card-body">
                     <form action="/signin" method="POST">
                         <div class="form-group">
@@ -26,7 +23,7 @@
                         <a class="btn btn-secondary btn-block" href="/signup">Sign up</a>
                     </div>
                     <div class="form-group">
-                        <a class="btn btn-secondary btn-block" href="/googleauth">Sign up with Google</a>
+                        <a class="btn btn-danger btn-block" href="/googleauth">Sign in with Google</a>
                     </div>
                 </div>
             </div>
